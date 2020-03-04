@@ -1,0 +1,67 @@
+{
+    "testing" : true,
+    "dev_id": "0004a30b0026cf44",
+    "port": 8,
+    "payload_raw": {
+      "type": "Buffer",
+      "data": [
+        69,
+        77,
+        83,
+        1,
+        0,
+        213,
+        63,
+        0,
+        2,
+        0,
+        4,
+        0,
+        4,
+        151,
+        0,
+        1,
+        140,
+        0,
+        0,
+        0,
+        81,
+        0,
+        0,
+        89,
+        0,
+        0,
+        112,
+        255,
+        254,
+        130,
+        57,
+        68
+      ]
+    },
+    "metadata": {
+      "time": "2020-02-04T09:36:17.796870164Z",
+      "frequency": 922.2,
+      "snr": 2.2,
+      "rssi": -212
+    },
+    "rkhDeviceInfo": {
+      "_id": "0004a30b0026cf44",
+      "name": "Impact Device - 0004a30b0026cf44",
+      "location": [
+        0,
+        0
+      ],
+      "lastReadingDateTIme": "2019-12-10T22:15:17.700Z",
+      "metadata": {
+        "thingSpeak" : {
+          "thingspeak_EMSWeather_key" : "FAKE_THINGSPEAK_EMS_WEATHER_KEY",
+          "thingspeak_EMSAirQuality_key" : "FAKE_THINGSPEAK_EMS_AIRQUAL_KEY",
+          "thingspeak_EMSNoiseStatus_key" : "FAKE_THINGSPEAK_EMS_NOISESTATUS_KEY"
+        },
+        "ThingSpeak_key_airquality": "AUIK9V740NFD03RN",
+        "ThingSpeak_key_noisestatus": "W7OGEBNL7I350TIG",
+        "type": "EMS"
+      }
+    }
+  }

@@ -1,0 +1,55 @@
+{
+  "title": "NNNCO UTS Stream - Data received.",
+  "data": {
+    "ts": 1583193814017,
+    "deviceId": "70B3D57050002EC4",
+    "hexPayload": "3c5d52eca4986e5a0101a8",
+    "type": "uplink",
+    "port": 1,
+    "network": {
+      "type": "loraWan",
+      "source": "actility",
+      "loraWan": {
+        "lrrTs": 1583193814017,
+        "loraPort": 1,
+        "uplinkCnt": 151,
+        "adrBit": null,
+        "mType": 2,
+        "downlinkCnt": 32,
+        "lrcId": "00000231",
+        "rssi": -82,
+        "snr": 10.5,
+        "spFact": 11,
+        "subBand": "G0",
+        "lrrCnt": 3,
+        "lrrId": "C00019B5",
+        "late": false,
+        "lrrLat": -33.913483,
+        "lrrLong": 150.921982,
+        "lrrList": [
+          {
+            "lrrId": "C00019B5",
+            "chain": 0,
+            "rssi": -82,
+            "snr": 10.5,
+            "esp": -82.370781
+          },
+          {
+            "lrrId": "DA005867",
+            "chain": 0,
+            "rssi": -122,
+            "snr": -10.5,
+            "esp": -132.870773
+          },
+          {
+            "lrrId": "C00019B8",
+            "chain": 0,
+            "rssi": -115,
+            "snr": -16.75,
+            "esp": -131.840836
+          }
+        ]
+      }
+    }
+  }
+}

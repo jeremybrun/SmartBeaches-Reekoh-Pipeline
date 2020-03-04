@@ -1,0 +1,80 @@
+{
+  "title": "NNNCO UTS Stream - Data received.",
+  "data": {
+    "hexPayload": "0100e802510400190500070e4d1100",
+    "type": "uplink",
+    "deviceId": "A81758FFFE0444E6",
+    "port": 5,
+    "ts": 1583238554508,
+    "network": {
+      "type": "loraWan",
+      "source": "actility",
+      "loraWan": {
+        "lrrTs": 1583238554508,
+        "loraPort": 5,
+        "uplinkCnt": 214,
+        "adrBit": 1,
+        "mType": 2,
+        "downlinkCnt": 85,
+        "lrcId": "00000231",
+        "rssi": -113,
+        "snr": -2,
+        "spFact": 7,
+        "subBand": "G0",
+        "lrrCnt": 1,
+        "lrrId": "C00019B5",
+        "late": false,
+        "lrrLat": -33.913483,
+        "lrrLong": 150.921982,
+        "lrrList": [
+          {
+            "lrrId": "C00019B5",
+            "chain": 0,
+            "rssi": -113,
+            "snr": -2,
+            "esp": -117.124428
+          }
+        ]
+      }
+    },
+    "readingList": [
+      {
+        "channelId": 0,
+        "type": "temperature",
+        "value": 23.2,
+        "unit": "°C"
+      },
+      {
+        "channelId": 1,
+        "type": "humidity",
+        "value": 81,
+        "unit": "%"
+      },
+      {
+        "channelId": 2,
+        "type": "light",
+        "value": 25,
+        "unit": "lx"
+      },
+      {
+        "channelId": 3,
+        "type": "digital",
+        "value": 0,
+        "label": "motion"
+      },
+      {
+        "channelId": 4,
+        "type": "voltage",
+        "value": 3.661,
+        "label": "battery",
+        "unit": "V"
+      },
+      {
+        "channelId": 7,
+        "type": "digital",
+        "value": 0,
+        "label": "occupancy"
+      }
+    ]
+  }
+}

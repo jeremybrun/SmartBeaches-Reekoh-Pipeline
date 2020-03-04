@@ -1,0 +1,53 @@
+{
+    "testing": true,
+    "ts": 1583283082588,
+    "deviceId": "70B3D57050002CF5",
+    "hexPayload": "d5eb47ecbb6c655a0100a4",
+    "type": "uplink",
+    "port": 1,
+    "network": {
+      "type": "loraWan",
+      "source": "actility",
+      "loraWan": {
+        "lrrTs": 1583283082588,
+        "loraPort": 1,
+        "uplinkCnt": 124,
+        "adrBit": null,
+        "mType": 2,
+        "downlinkCnt": 26,
+        "lrcId": "00000231",
+        "rssi": -101,
+        "snr": 11.25,
+        "spFact": 10,
+        "subBand": "G0",
+        "lrrCnt": 6,
+        "lrrId": "C00019B8",
+        "late": false,
+        "lrrLat": -33.913483,
+        "lrrLong": 150.921982,
+        "lrrList": [
+          {
+            "lrrId": "C00019B8",
+            "chain": 0,
+            "rssi": -101,
+            "snr": 11.25,
+            "esp": -101.314041
+          },
+          {
+            "lrrId": "DA005867",
+            "chain": 0,
+            "rssi": -105,
+            "snr": 9,
+            "esp": -105.514969
+          },
+          {
+            "lrrId": "DA00585E",
+            "chain": 0,
+            "rssi": -110,
+            "snr": 8.25,
+            "esp": -110.60556
+          }
+        ]
+      }
+    }
+  }
