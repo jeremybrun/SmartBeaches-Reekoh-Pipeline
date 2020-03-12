@@ -5,9 +5,10 @@
  */
 
 'use strict'
-const Moment = require('moment');
+//const Moment = require('moment');
 const axios = require('axios');
 
+/*
 let testing = false;
 
 function convertUnixFormatDateToUTCFormatDate(unixDateStr) {
@@ -24,14 +25,19 @@ function ConvertTimestampToUnixEpochMs(timestamp) {
           return new Date.now();
         }
     }
+*/
 
 function RkAPI_GetToken(rkendpoint) {
 
-var readlineSync = require('readline-sync');
-let api_key = readlineSync.question('May I have your api_key? ');
-  console.log("api_key=" + api_key)
-let api_secret = readlineSync.question('May I have your api_secret? ');
-
+/*
+  var readlineSync = require('readline-sync');
+	let api_key = readlineSync.question('May I have your api_key? ');
+  	console.log("api_key=" + api_key)
+	let api_secret = readlineSync.question('May I have your api_secret? ');
+*/
+	let api_key = "";
+	let api_secret = "";
+  
   let rkbody4token = {
       "token": api_key,
       "secret": api_secret
@@ -45,7 +51,6 @@ let api_secret = readlineSync.question('May I have your api_secret? ');
 }
 
 function RkAPI_GetDeviceInfo(device_id, token, rkendpoint) {
-  let body = {}
   let headers = { headers: {'Authorization': 'bearer ' + token}}
 
 /*
@@ -65,7 +70,7 @@ function RkAPI_GetDeviceInfo(device_id, token, rkendpoint) {
 
 function FindRkDeviceInfo(device_id) {
   let rkendpoint = "api-au-e.reekoh.io";
-  let rkendpoint2 = "requestbin.net/r/19fcmh91";
+  //let rkendpoint2 = "requestbin.net/r/19fcmh91";
 
 
 //  console.log("res=" + res);
@@ -92,7 +97,7 @@ function FindRkDeviceInfo(device_id) {
 exports.handle = function (data, logger) {
 
   // Log input data
-  //logger.log(data)
+  logger.log(data)
 
   // Create output message object
   let message = {}
