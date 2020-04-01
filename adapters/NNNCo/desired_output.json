@@ -1,6 +1,5 @@
 {
     "testing" : true,
-    "dev_id": "0004a30b0026cf44",
     "port": 8,
     "payload_raw": {
       "type": "Buffer",
@@ -39,11 +38,12 @@
         68
       ]
     },
-    "metadata": {
-      "time": "2020-02-04T09:36:17.796870164Z",
-      "frequency": 922.2,
-      "snr": 2.2,
-      "rssi": -212
+    "network_metadata": {
+      "timestamp_utc": "2020-02-04T09:36:17.796870164Z",
+	    "timestamp_unixEpoch_ms": 1580808977796,
+	    "RSSI": 0,
+	    "SNR": 0,
+	    "source": "TTN"
     },
     "rkhDeviceInfo": {
       "_id": "0004a30b0026cf44",

@@ -1,0 +1,38 @@
+{
+    "port": 1,
+    "buffer": {
+        "type": "Buffer",
+        "data": [
+            224,
+            124,
+            82,
+            236,
+            153,
+            156,
+            110,
+            90,
+            6,
+            4,
+            161
+        ]
+    },
+    "network_metadata": {
+        "timestamp_utc": 1585453755889,
+        "timestamp_unixEpoch_ms": "2020-03-29T03:49:15.889",
+        "source": "NNNCo",
+        "RSSI": -76,
+        "SNR": 12.75
+    },
+    "rkhDeviceInfo": {
+        "_id": "70B3D57050002E9D",
+        "name": "YABFIX023_LMCC",
+        "location": [],
+        "metadata": {
+            "_id": "70B3D57050002E9D",
+            "configuration": "fixed",
+            "name": "YABFIX023_LMCC",
+            "number": "023",
+            "type": "Yabby"
+        }
+    }
+}

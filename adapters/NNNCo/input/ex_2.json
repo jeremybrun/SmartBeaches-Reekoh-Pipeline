@@ -1,55 +1,57 @@
 {
-  "title": "NNNCO UTS Stream - Data received.",
-  "data": {
-    "hexPayload": "05011101",
+    "ts": 1585177525896,
+    "deviceId": "70B3D57050002BC3",
+    "hexPayload": "57020630024004430b8406",
     "type": "uplink",
-    "deviceId": "A81758FFFE0444E6",
-    "port": 5,
-    "ts": 1583283520562,
+    "port": 3,
     "network": {
       "type": "loraWan",
       "source": "actility",
       "loraWan": {
-        "lrrTs": 1583283520562,
-        "loraPort": 5,
-        "uplinkCnt": 311,
+        "lrrTs": 1585177525896,
+        "loraPort": 3,
+        "uplinkCnt": 41,
         "adrBit": 1,
         "mType": 2,
-        "downlinkCnt": 122,
+        "downlinkCnt": 13,
         "lrcId": "00000231",
-        "rssi": -115,
-        "snr": -5,
+        "rssi": -94,
+        "snr": 7.75,
         "spFact": 7,
         "subBand": "G0",
-        "lrrCnt": 1,
-        "lrrId": "C00019B5",
+        "lrrCnt": 2,
+        "lrrId": "C00019B8",
         "late": false,
-        "lrrLat": -33.913483,
-        "lrrLong": 150.921982,
+        "lrrLat": -33.051586,
+        "lrrLong": 151.668045,
         "lrrList": [
           {
-            "lrrId": "C00019B5",
+            "lrrId": "C00019B8",
             "chain": 0,
-            "rssi": -115,
-            "snr": -5,
-            "esp": -121.193314
+            "rssi": -94,
+            "snr": 7.75,
+            "esp": -94.673981
+          },
+          {
+            "lrrId": "DA005867",
+            "chain": 0,
+            "rssi": -107,
+            "snr": 7.75,
+            "esp": -107.673981
           }
         ]
       }
     },
-    "readingList": [
-      {
-        "channelId": 3,
-        "type": "digital",
-        "value": 1,
-        "label": "motion"
-      },
-      {
-        "channelId": 7,
-        "type": "digital",
-        "value": 1,
-        "label": "occupancy"
+    "deviceInfo": {
+      "_id": "70B3D57050002BC3",
+      "name": "YABMOB009_LMCC",
+      "location": [],
+      "metadata": {
+        "_id": "70B3D57050002BC3",
+        "configuration": "mobile",
+        "name": "YABMOB009_LMCC",
+        "number": "009",
+        "type": "Yabby"
       }
-    ]
+    }
   }
-}

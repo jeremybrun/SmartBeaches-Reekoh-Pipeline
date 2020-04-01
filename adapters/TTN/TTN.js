@@ -18,18 +18,36 @@ function convertUnixFormatDateIntToUTCFormatDate(unixDateInt) {
     return Moment(unixDate).format('YYYY-MM-DDTHH:mm:ss.SSS');
 }
 
-/*
+
 function ConvertTimestampToUnixEpochMs(timestamp) {
         let parsedTimestamp = Date.parse(timestamp);
         if (parsedTimestamp)
           return parsedTimestamp;
         else {
-          logger.error("Failed to parse provided timestamp, return Date.now() instead")
+          //logger.error("Failed to parse provided timestamp, return Date.now() instead")
           return new Date.now();
         }
     }
-*/
 
+function ExtractAndAddTTNNetworkInfo(data)
+{
+  	// Extracting the maximum SNR and RSSI from the gateway array
+    let snr = -Infinity
+    let rssi = -Infinity
+    for (let gateway of data.metadata.gateways) {
+      if (gateway.snr > snr) {
+        snr = gateway.snr
+      }
+      if (gateway.rssi > rssi) {
+        rssi = gateway.rssi
+      }
+    }
+  
+    let res = {};
+    res.snr = snr;
+    res.rssi = rssi;
+    return res;
+}
 
 /**
  * Handler function that will process the data and return a result.
@@ -57,34 +75,43 @@ exports.handle = function (data, logger) {
 
   // Transcode from hex to buffer
   // Sanity check
-  if (!data.hasOwnProperty("hexPayload"))
-    throw new Error('hexPayload field missing from provided data');
-  
-  let hexdata = data.hexPayload;
-  let buffer = Buffer.from(hexdata, 'hex');
+  if (!data.hasOwnProperty("payload_raw"))
+    throw new Error('payload_raw field missing from provided data');
 
-  message.buffer = buffer;
+  message.buffer = data.payload_raw;
 
   if (data.testing) {
     message.testing = true;
   }
 
 
-  if (!data.hasOwnProperty("ts"))
-    throw new Error('ts field missing from provided data');
+  if (!data.hasOwnProperty("metadata"))
+    throw new Error('metadata structure missing from provided data');
   message.network_metadata = {}
-  message.network_metadata.timestamp_utc = data.ts;
-  message.network_metadata.timestamp_unixEpoch_ms = convertUnixFormatDateIntToUTCFormatDate(data.ts);
-  message.network_metadata.source = "NNNCo" ;
+
+  if (!data.metadata.hasOwnProperty("time"))
+    throw new Error('metadata/time field missing from provided data');
+
+  let timestamp_utc = ConvertTimestampToUnixEpochMs(data.metadata.time)
+  message.network_metadata.timestamp_unixEpoch_ms = convertUnixFormatDateIntToUTCFormatDate(timestamp_utc);
+  message.network_metadata.timestamp_utc = timestamp_utc;
+
+  let network_signal = ExtractAndAddTTNNetworkInfo(data);
+  message.network_metadata.SNR = network_signal.snr;
+  message.network_metadata.RSSI = network_signal.rssi;
+
+
+  message.network_metadata.source = "TTN";
 
 
 
-  if (!data.hasOwnProperty("deviceInfo"))
-    throw new Error('deviceInfo field missing from provided data');
+  if (!data.hasOwnProperty("rkhDeviceInfo"))
+    throw new Error('rkhDeviceInfo field missing from provided data');
 
   //rkhDeviceInfo
-  message.rkhDeviceInfo = data.deviceInfo
+  message.rkhDeviceInfo = data.rkhDeviceInfo
 
+/*
   //network_metadata
   if (!data.hasOwnProperty("network") && !data.network.hasOwnProperty("loraWan"))
     throw new Error('network/loraWan structure missing from provided data');
@@ -98,7 +125,7 @@ exports.handle = function (data, logger) {
   if (!data.network.loraWan.hasOwnProperty("snr"))
     throw new Error('snr field missing from provided data');
   message.network_metadata.SNR = data.network.loraWan.snr;
-
+*/
   
 
 /*

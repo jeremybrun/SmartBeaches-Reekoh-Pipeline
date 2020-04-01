@@ -1,0 +1,51 @@
+{
+    "app_id": "nbc-smartbeaches",
+    "dev_id": "70b3d5705000131e",
+    "hardware_serial": "70B3D5705000131E",
+    "port": 1,
+    "counter": 820,
+    "payload_raw": {
+      "type": "Buffer",
+      "data": [
+        222,
+        168,
+        219,
+        235,
+        10,
+        212,
+        37,
+        90,
+        1,
+        94,
+        159
+      ]
+    },
+    "metadata": {
+      "time": "2020-03-30T07:21:32.982310925Z",
+      "frequency": 922.8,
+      "modulation": "LORA",
+      "data_rate": "SF10BW125",
+      "airtime": 370688000,
+      "coding_rate": "4/5",
+      "gateways": [
+        {
+          "gtw_id": "eui-00800000a000399a",
+          "timestamp": 1367915628,
+          "time": "2020-03-30T07:21:32.586346Z",
+          "channel": 5,
+          "rssi": -121,
+          "snr": -12.2,
+          "rf_chain": 0,
+          "latitude": -33.79771,
+          "longitude": 151.28569,
+          "altitude": 32
+        }
+      ]
+    },
+    "rkhDeviceInfo": {
+      "_id": "70b3d5705000131e",
+      "name": "YABMOB002_NBC",
+      "location": [],
+      "metadata": {}
+    }
+  }

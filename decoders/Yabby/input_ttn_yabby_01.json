@@ -1,0 +1,32 @@
+{
+    "port": 1,
+    "buffer": {
+        "type": "Buffer",
+        "data": [
+            222,
+            168,
+            219,
+            235,
+            10,
+            212,
+            37,
+            90,
+            1,
+            94,
+            159
+        ]
+    },
+    "network_metadata": {
+        "timestamp_unixEpoch_ms": "2020-03-30T07:21:32.982",
+        "timestamp_utc": 1585552892982,
+        "SNR": -12.2,
+        "RSSI": -121,
+        "source": "TTN"
+    },
+    "rkhDeviceInfo": {
+        "_id": "70b3d5705000131e",
+        "name": "YABMOB002_NBC",
+        "location": [],
+        "metadata": {}
+    }
+}

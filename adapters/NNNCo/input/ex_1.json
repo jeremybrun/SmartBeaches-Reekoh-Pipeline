@@ -1,53 +1,50 @@
 {
-    "testing": true,
-    "ts": 1583283082588,
-    "deviceId": "70B3D57050002CF5",
-    "hexPayload": "d5eb47ecbb6c655a0100a4",
+    "ts": 1585453755889,
+    "deviceId": "70B3D57050002E9D",
+    "hexPayload": "e07c52ec999c6e5a0604a1",
     "type": "uplink",
     "port": 1,
     "network": {
       "type": "loraWan",
       "source": "actility",
       "loraWan": {
-        "lrrTs": 1583283082588,
+        "lrrTs": 1585453755889,
         "loraPort": 1,
-        "uplinkCnt": 124,
-        "adrBit": null,
+        "uplinkCnt": 2,
+        "adrBit": 1,
         "mType": 2,
-        "downlinkCnt": 26,
+        "downlinkCnt": 3,
         "lrcId": "00000231",
-        "rssi": -101,
-        "snr": 11.25,
-        "spFact": 10,
+        "rssi": -76,
+        "snr": 12.75,
+        "spFact": 9,
         "subBand": "G0",
-        "lrrCnt": 6,
-        "lrrId": "C00019B8",
+        "lrrCnt": 1,
+        "lrrId": "C00019B5",
         "late": false,
-        "lrrLat": -33.913483,
-        "lrrLong": 150.921982,
+        "lrrLat": -33.013935,
+        "lrrLong": 151.719803,
         "lrrList": [
           {
-            "lrrId": "C00019B8",
+            "lrrId": "C00019B5",
             "chain": 0,
-            "rssi": -101,
-            "snr": 11.25,
-            "esp": -101.314041
-          },
-          {
-            "lrrId": "DA005867",
-            "chain": 0,
-            "rssi": -105,
-            "snr": 9,
-            "esp": -105.514969
-          },
-          {
-            "lrrId": "DA00585E",
-            "chain": 0,
-            "rssi": -110,
-            "snr": 8.25,
-            "esp": -110.60556
+            "rssi": -76,
+            "snr": 12.75,
+            "esp": -76.224648
           }
         ]
+      }
+    },
+    "deviceInfo": {
+      "_id": "70B3D57050002E9D",
+      "name": "YABFIX023_LMCC",
+      "location": [],
+      "metadata": {
+        "_id": "70B3D57050002E9D",
+        "configuration": "fixed",
+        "name": "YABFIX023_LMCC",
+        "number": "023",
+        "type": "Yabby"
       }
     }
   }
