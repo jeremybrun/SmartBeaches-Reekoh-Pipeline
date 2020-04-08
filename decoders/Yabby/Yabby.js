@@ -1,7 +1,95 @@
 'use strict'
 
-function Decoder(bytes, port)
+/* By jeremy.brun@uts.edu.au / jeremy.brun@gmail.com
+ *
+ * This file is subject to the terms and conditions defined in
+ * file 'LICENSE.txt', which is part of this source code package.
+ */
+
+/* SmartBeaches YABBY Decoder for NNNCO and TTN v3.1
+* Changlelog:
+* v3.1 added example of decoded data in comment
+* v3.0 update output data model to datalake
+*      bumped typeversion to 2
+*      added changelog
+*/
+
+'use strict'
+const Moment = require('moment');
+
+/*
+// This function turns data_mapping_field in data_field value base on the values found in the provided intermediateFormat
+function GenerateThingspeakDataFields(thingspeakinfo, intermediateFormat, logger) {
+  // Empty field counter
+  let number_of_empty_fields = 0;
+
+  // looking for all 8 ThingSpeak data fields 
+  for (var i=1; i<=8; i++) {
+    if (thingspeakinfo.hasOwnProperty("data_mapping_field"+i))
+    {
+      if (intermediateFormat.hasOwnProperty(thingspeakinfo["data_mapping_field"+i]))
+      {
+        // Push the data field value in
+        thingspeakinfo["data_field"+i] = intermediateFormat[thingspeakinfo["data_mapping_field"+i]];
+      }
+      else
+      {
+        // Value not found in intermediateFormat
+        // This is a problem but we do not want to throw an exception here for fear of loosing data
+        logger.error("no entry named "+thingspeakinfo["data_mapping_field"+i]+" in provided intermediateFormat");
+      }
+    }
+    else
+    {
+      //thingspeakinfo["data_field"+i] = null;
+      number_of_empty_fields++;
+    }
+  }
+
+  if (number_of_empty_fields === 8)
+  {
+  // at least one field is needed otherwise we log an error 
+  // we do not want to throw as other element may be valid
+    logger.error("no telemetry found to send to ThingSpeak for apikey "+thingspeakinfo.apikey);
+    // This is a problem but we do not want to throw an exception here for fear of loosing data
+  }
+  return thingspeakinfo;
+}
+*/
+
+function GenerateDatalakeDataFields(datalakeinfo, intermediateFormat, logger) {
+  let rawData = {};
+  for (const field of datalakeinfo.telemetrylist) {
+    if (intermediateFormat.hasOwnProperty(field)) 
+      rawData[field] = intermediateFormat[field];
+    else
+      logger.error("no entry named "+field+" in provided intermediateFormat");
+  }
+  return rawData;
+}
+
+function GenerateDataFields(fieldselection, intermediateFormat, logger) {
+  let rawData = {};
+  for (const field of fieldselection) {
+    if (intermediateFormat.hasOwnProperty(field)) 
+      rawData[field] = intermediateFormat[field];
+    else
+      logger.error("no entry named "+field+" in provided intermediateFormat");
+  }
+  return rawData;
+}
+
+
+
+// the function MUST be called "Decode" takes the TTN and raw Buffer
+// usually extracted using 
+// Buffer.from(data.payload_raw.data, 'hex')
+function Decode(port, msg, logger)
 {
+  if (port !== 1)
+    logger.error("Expected port is 1, but provided port is " + port)
+
+  let bytes = msg;
   // Decode an uplink message from a buffer
   // (array) of bytes to an object of fields.
   var decoded = {};
@@ -68,7 +156,199 @@ function Decoder(bytes, port)
 
     return decoded;
 }
-      
+
+// Put an example of the result from the docder function here
+/*
+Example Decoded Payload for Yabby
+{
+  type: 'position',
+  latitudeDeg: -33.01384,
+  longitudeDeg: 151.7198489,
+  inTrip: false,
+  fixFailed: true,
+  manDown: true,
+  headingDeg: 180,
+  speedKmph: 0,
+  batV: 4.025
+}
+*/
+
+// This function should throw an exception if decoded data does not looks like expected
+function Verify(decoded, logger)
+{
+  if (!decoded.hasOwnProperty("type")) {
+    logger.error('type field missing in decoded data');
+    throw new Error('type field missing in decoded data');
+  }  
+  if (!decoded.hasOwnProperty("latitudeDeg")) {
+    logger.error('latitudeDeg field missing in decoded data');
+    throw new Error('latitudeDeg field missing in decoded data');
+  }  
+  if (!decoded.hasOwnProperty("longitudeDeg")) {
+    logger.error('longitudeDeg field missing in decoded data');
+    throw new Error('longitudeDeg field missing in decoded data');
+  }  
+  if (!decoded.hasOwnProperty("inTrip")) {
+    logger.error('inTrip field missing in decoded data');
+    throw new Error('inTrip field missing in decoded data');
+  }  
+  if (!decoded.hasOwnProperty("fixFailed")) {
+    logger.error('fixFailed field missing in decoded data');
+    throw new Error('fixFailed field missing in decoded data');
+  }  
+  if (!decoded.hasOwnProperty("headingDeg")) {
+    logger.error('headingDeg field missing in decoded data');
+    throw new Error('headingDeg field missing in decoded data');
+  }  
+  if (!decoded.hasOwnProperty("speedKmph")) {
+    logger.error('speedKmph field missing in decoded data');
+    throw new Error('speedKmph field missing in decoded data');
+  }  
+  if (!decoded.hasOwnProperty("speedKmph")) {
+    logger.error('speedKmph field missing in decoded data');
+    throw new Error('speedKmph field missing in decoded data');
+  }  
+  return true;
+}
+
+// This function MUST return true if the received data is compatible with the ecoder
+// and it MUST retrurn false if it is not
+function IsDataCompatible(data, logger)
+{
+  if (data.rkhDeviceInfo.metadata.hasOwnProperty("type"))
+  {
+    if (data.rkhDeviceInfo.metadata.type.toLowerCase() !== 'yabby')
+    {
+      logger.error("type is NOT TemplateDeviceType")
+      return false;    
+    }
+    return true;
+  }
+  else if (data.rkhDeviceInfo.metadata.name.toLowerCase().search("yab") === 0)
+    return true;
+  return false;
+}
+
+// This functions fills the formatted data object from the decoded infomration
+function FillFormattedData(decoded, formatted_data)
+//function FillFormattedData(decoded, formatted_data, rkdevinfo, logger)
+{
+
+  formatted_data["telemetry/asset_latitude_deg"] = decoded.latitudeDeg;
+  formatted_data["telemetry/asset_longitude_deg"] = decoded.longitudeDeg;
+  formatted_data["telemetry/asset_heading_deg"] = decoded.headingDeg;
+  formatted_data["telemetry/asset_speed_kmph"] = decoded.speedKmph;
+  formatted_data["internal/batteryVoltage_V"] = decoded.batV;
+  formatted_data["internal/Error_GPSfixFailed_"] = decoded.fixFailed;
+  return true; 
+}
+
+/*
+function CreateThingSpeakInfoArray(data, formatted_data, logger)
+{
+  let thingspeakinfo_array = [];
+
+  if (data.rkhDeviceInfo && data.rkhDeviceInfo.metadata.hasOwnProperty("thingSpeak"))
+  {
+    if (data.rkhDeviceInfo.metadata.thingSpeak.thingspeak_TEMPLATEDEVICE_key) {
+      let thingspeakinfo = {};
+      thingspeakinfo.apikey = data.rkhDeviceInfo.metadata.thingSpeak.thingspeak_TEMPLATEDEVICE_key;
+      thingspeakinfo.data_mapping_field1 = "telemetry/telemetry1";
+      thingspeakinfo.data_mapping_field6 = "internal/solarVoltage_V";
+      thingspeakinfo.data_mapping_field7 = "network/lorawan_snr";
+      thingspeakinfo.data_mapping_field8 = "network/lorawan_rssi";
+
+      thingspeakinfo = GenerateThingspeakDataFields(thingspeakinfo, formatted_data, logger);
+
+      thingspeakinfo_array.push(thingspeakinfo);
+    }
+  }
+  return thingspeakinfo_array;
+}
+*/
+ 
+function CreateDataLakeInfo(data, formatted_data, logger)
+{
+  let datalakeinfo = {};
+
+  datalakeinfo.data = {};
+  datalakeinfo.data.stream_id = `${data.network_metadata.source.toUpperCase()}-YABBY-EUID-${formatted_data["global/deviceId"].replace(/-/g, '')}`.toUpperCase();
+  datalakeinfo.data.timestamp = formatted_data["global/timestamp_unixEpoch_ms"];
+
+  datalakeinfo.info = {};
+  datalakeinfo.data.type = "YABBY";
+  datalakeinfo.data.type_version = 2;
+
+  datalakeinfo.info.telemetrylist = [
+    "telemetry/asset_latitude_deg",
+    "telemetry/asset_longitude_deg",
+    "telemetry/asset_heading_deg",
+    "telemetry/asset_speed_kmph",
+    "internal/batteryVoltage_V",
+    "internal/Error_GPSfixFailed_",
+    "network/lorawan_snr",
+    "network/lorawan_rssi"
+    ];    
+
+  datalakeinfo.data.raw_data = GenerateDatalakeDataFields(datalakeinfo.info, formatted_data, logger);
+
+  return datalakeinfo;
+}
+
+function CreateUrbanPulseInfo(data, formatted_data, logger)
+{
+  // fake code to avoid the unused variable issue in Reekoh
+  if (data && formatted_data && logger)
+    return null;
+
+  let urbanpulseinfo = {};
+  urbanpulseinfo.endpoint = "FAKE_UP_STREAM";
+  urbanpulseinfo.data = {};
+  
+  urbanpulseinfo.telemetrylist = [
+    "global/timestamp_utc",
+    "global/timestamp_unixEpoch_ms",
+    "global/deviceId",
+    "telemetry/asset_latitude_deg",
+    "telemetry/asset_longitude_deg",
+    "telemetry/asset_heading_deg",
+    "telemetry/asset_speed_kmph",
+    "internal/batteryVoltage_V",
+    "internal/Error_GPSfixFailed_",
+    "network/lorawan_snr",
+    "network/lorawan_rssi"
+    ];
+
+  urbanpulseinfo.data = GenerateDataFields(urbanpulseinfo.telemetrylist, formatted_data, logger);
+
+  //urbanpulseinfo.data = GenerateDataFields(urbanpulseinfo.telemetrylist, formatted_data, logger);
+  //return urbanpulseinfo;
+
+  return null;
+}
+
+
+
+
+/**** DO NOT MODIFY THE FUNCTIONS FOR A PARTICULAR ****
+***** DECODER FROM HERE ALL THE BELOW FUNCTIONS    ****
+***** MUST STAY COMMON TO ALL DECODERS             ****/
+
+function convertUnixFormatDateToUTCFormatDate(unixDateStr) {
+    let unixDate = Date.parse(unixDateStr);
+    return Moment(unixDate).format('YYYY-MM-DDTHH:mm:ss.SSS');
+}
+
+function ConvertTimestampToUnixEpochMs(timestamp) {
+        let parsedTimestamp = Date.parse(timestamp);
+        if (parsedTimestamp)
+          return parsedTimestamp;
+        else {
+          //logger.error("Failed to parse provided timestamp, return Date.now() instead")
+          return new Date.now();
+        }
+    }
+
 
 /**
  * Handler function that will process the data and return a result.
@@ -78,12 +358,69 @@ function Decoder(bytes, port)
  * @param {Function} logger.log - Use to log anything i.e. logger.log(Object | String)
  */
 exports.handle = function (data, logger) {
-  // TODO: Process the data here. You may return a value, or a Promise.
-  logger.log(data)
+
+  // Check we are handling the correct data
+  if (!IsDataCompatible(data, logger))
+    return Promise.resolve("Incompatible Data"); 
   
-  let rawBuffer = Buffer.from(data.buffer.data, 'hex');
-  let finalformat = Decoder(rawBuffer, data.port);
+  // Log input data
+  //logger.log(data)
   
+  // Prepare the outgoing message
+  let message = {};
+  message.formatted_data = {}
+
+  // Add Device ID
+  message.formatted_data["global/deviceId"] = data.rkhDeviceInfo._id;
+
+  // Add TimeStamp
+  message.formatted_data["global/timestamp_utc"] = data.network_metadata.timestamp_utc;
+  message.formatted_data["global/timestamp_unixEpoch_ms"] = data.network_metadata.timestamp_unixEpoch_ms;
+
+  // Add TTN network metadata
+  message.formatted_data["network/lorawan_snr"] = data.network_metadata.SNR;
+  message.formatted_data["network/lorawan_rssi"] = data.network_metadata.RSSI;
+
+  // Decode the raw payload, somehow the decagon does encode some data in the provided port as well
+  let decoded = Decode(data.port, Buffer.from(data.buffer.data, 'hex'), logger);
+
+  //logger.log(decoded)
   
-  return Promise.resolve(finalformat)
+  // Sanity checks, making sure all expected data is present
+  // for intermediateFormat transformation
+  if (!Verify(decoded, logger))
+    return;
+
+  // Formatted Data (including telemetry)
+  if (!FillFormattedData(decoded, message.formatted_data))
+    return Promise.resolve("FillFormattedData Error"); 
+ 
+  // Outputs generation
+  message.output = {};
+
+  /*
+  // ThingSpeak output information
+  let thingspeakinfo = CreateThingSpeakInfoArray(data, message.formatted_data, logger);
+  if (thingspeakinfo)
+    message.output.thingspeak = thingspeakinfo;
+  */
+
+  // DataLake output information
+  let datalakeinfo = CreateDataLakeInfo(data, message.formatted_data, logger);
+  if (datalakeinfo)
+    message.output.datalake = datalakeinfo;
+
+  // DataLake output information
+  let urbanpulseinfo = CreateUrbanPulseInfo(data, message.formatted_data, logger);
+  if (urbanpulseinfo)
+    message.output.urbanpulse = urbanpulseinfo;
+
+  //logger.log(message)
+  //logger.log(JSON.stringify(message, null, 4))
+
+   // forward testing flag
+   if (data.testing)
+     message.output.testing = true;
+
+  return Promise.resolve(message)
 }
