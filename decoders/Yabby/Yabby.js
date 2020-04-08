@@ -1,5 +1,3 @@
-'use strict'
-
 /* By jeremy.brun@uts.edu.au / jeremy.brun@gmail.com
  *
  * This file is subject to the terms and conditions defined in
@@ -15,7 +13,7 @@
 */
 
 'use strict'
-const Moment = require('moment');
+//const Moment = require('moment');
 
 /*
 // This function turns data_mapping_field in data_field value base on the values found in the provided intermediateFormat
@@ -333,7 +331,7 @@ function CreateUrbanPulseInfo(data, formatted_data, logger)
 /**** DO NOT MODIFY THE FUNCTIONS FOR A PARTICULAR ****
 ***** DECODER FROM HERE ALL THE BELOW FUNCTIONS    ****
 ***** MUST STAY COMMON TO ALL DECODERS             ****/
-
+/*
 function convertUnixFormatDateToUTCFormatDate(unixDateStr) {
     let unixDate = Date.parse(unixDateStr);
     return Moment(unixDate).format('YYYY-MM-DDTHH:mm:ss.SSS');
@@ -348,7 +346,7 @@ function ConvertTimestampToUnixEpochMs(timestamp) {
           return new Date.now();
         }
     }
-
+*/
 
 /**
  * Handler function that will process the data and return a result.
